@@ -1,0 +1,17 @@
+name: mailcatcher
+version: 0.0.1
+inherits: wercker/ubuntu12.04-webessentials@1.0.4
+type: service
+platform: ubuntu@12.04
+description: wercker box for mailcatcher
+keywords:
+    - mailcatcher
+    - mail
+    - email
+script: |
+    sudo gem install --no-ri --no-rdoc mailcatcher
+    sudo mailcatcher
+env:
+    WERCKER_MAILCATCHER_HOST: $$HOST$$
+    WERCKER_MAILCATCHER_PORT: 1025
+    WERCKER_MAILCATCHER_URL: $$HOST$$:1025
