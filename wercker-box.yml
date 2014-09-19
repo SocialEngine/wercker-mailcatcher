@@ -1,24 +1,21 @@
 name: mailcatcher
-version: 0.0.2
-inherits: wercker/ubuntu12.04-webessentials@1.0.4
+version: 0.0.3
+inherits: mies/librarian-puppet@0.0.2
 type: service
 platform: ubuntu@12.04
 description: wercker box for mailcatcher
 keywords:
-    - mailcatcher
-    - mail
-    - email
+  - mailcatcher
+  - mail
+  - email
+packages:
+  - mailcatcher
 script: |
-    sudo gem install --no-ri --no-rdoc mailcatcher
-    touch mailcatcher.conf
-    echo 'description "mailcatcher service registry"' >> mailcatcher.conf
-    echo 'start on started' >> mailcatcher.conf
-    echo 'stop on shutdown' >> mailcatcher.conf
-    echo 'exec mailcather' >> mailcatcher.conf
-    sudo mv mailcatcher.conf /etc/init/mailcatcher.conf
+  sudo apt-get update
+  sudo puppet apply --modulepath=modules manifests/init.pp
 env:
-    WERCKER_MAILCATCHER_HOST: $$HOST$$
-    WERCKER_MAILCATCHER_SMTP_PORT: 1025
-    WERCKER_MAILCATCHER_HTTP_PORT: 1080
-    WERCKER_MAILCATCHER_SMTP_URL: $$HOST$$:1025
-    WERCKER_MAILCATCHER_HTTP_URL: $$HOST$$:1080
+  WERCKER_MAILCATCHER_HOST: $$HOST$$
+  WERCKER_MAILCATCHER_SMTP_PORT: 1025
+  WERCKER_MAILCATCHER_HTTP_PORT: 1080
+  WERCKER_MAILCATCHER_SMTP_URL: $$HOST$$:1025
+  WERCKER_MAILCATCHER_HTTP_URL: $$HOST$$:1080
